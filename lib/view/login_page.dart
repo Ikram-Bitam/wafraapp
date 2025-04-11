@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  
+
   bool _isLoading = false;
   String? _errorMessage;
   bool _obscurePassword = true;
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 60),
-                      
+
                       // App Logo
                       Text(
                         "وفرة",
@@ -83,9 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.orange,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
-                    
+
                       // Tagline
                       Text(
                         "Together, let's start saving\nfamilies !",
@@ -96,36 +96,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.orange,
                         ),
                       ),
-                      
+
                       // Large blank space for possible future image
                       const SizedBox(height: 200),
-                     Container(
-  height: 200,
-  color: Colors.red, // Temporary background to verify container visibility
-  child: Builder(
-    builder: (context) {
-      try {
-        return Image.asset(
-          'assets/images/signup.png',
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            print('Image error: $error');
-            return Container(
-              color: Colors.yellow,
-              child: const Icon(Icons.error),
-            );
-          },
-        );
-      } catch (e) {
-        print('Widget error: $e');
-        return Container(
-          color: Colors.blue,
-          child: const Icon(Icons.warning),
-        );
-      }
-    },
-  ),
-),
+                      Container(
+                        height: 200,
+                        // Temporary background to verify container visibility
+                        child: Builder(
+                          builder: (context) {
+                            try {
+                              return Image.asset(
+                                'assets/images/signup.png',
+                                fit: BoxFit.contain,
+                                errorBuilder: (context, error, stackTrace) {
+                                  print('Image error: $error');
+                                  return Container(
+                                    color: Colors.yellow,
+                                    child: const Icon(Icons.error),
+                                  );
+                                },
+                              );
+                            } catch (e) {
+                              print('Widget error: $e');
+                              return Container(
+                                color: Colors.blue,
+                                child: const Icon(Icons.warning),
+                              );
+                            }
+                          },
+                        ),
+                      ),
                       const Text(
                         "Connect with organizations and businesses to rescue surplus food, reduce waste, and make a positive environmental impact while saving money.",
                         textAlign: TextAlign.center,
@@ -134,9 +134,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.black87,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Email field
                       TextFormField(
                         controller: _emailController,
@@ -152,33 +152,39 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+                            borderSide:
+                                BorderSide(color: Colors.grey.withOpacity(0.3)),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.5)),
+                            borderSide:
+                                BorderSide(color: Colors.grey.withOpacity(0.5)),
                           ),
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.red.withOpacity(0.5)),
+                            borderSide:
+                                BorderSide(color: Colors.red.withOpacity(0.5)),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.red.withOpacity(0.5)),
+                            borderSide:
+                                BorderSide(color: Colors.red.withOpacity(0.5)),
                           ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
-                          } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          } else if (!RegExp(
+                                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value)) {
                             return 'Please enter a valid email';
                           }
                           return null;
                         },
                       ),
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       // Password field
                       TextFormField(
                         controller: _passwordController,
@@ -188,7 +194,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                             ),
                             onPressed: () {
                               setState(() {
@@ -204,19 +212,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+                            borderSide:
+                                BorderSide(color: Colors.grey.withOpacity(0.3)),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.5)),
+                            borderSide:
+                                BorderSide(color: Colors.grey.withOpacity(0.5)),
                           ),
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.red.withOpacity(0.5)),
+                            borderSide:
+                                BorderSide(color: Colors.red.withOpacity(0.5)),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.red.withOpacity(0.5)),
+                            borderSide:
+                                BorderSide(color: Colors.red.withOpacity(0.5)),
                           ),
                         ),
                         validator: (value) {
@@ -228,9 +240,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      
+
                       const SizedBox(height: 8),
-                      
+
                       // Error message if any
                       if (_errorMessage != null)
                         Padding(
@@ -240,29 +252,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: const TextStyle(color: Colors.red),
                           ),
                         ),
-                      
+
                       const SizedBox(height: 24),
-                      
+
                       // Social login buttons
                       // Google button
                       _buildSocialButton(
                         text: "Continue with Google",
-                icon:   Image.asset(
-  'assets/images/google.webp',
-  width: 2,
-  height: 2,
-  errorBuilder: (context, error, stackTrace) {
-    return Icon(Icons.error); // Fallback if image fails to load
-  },
-),
+                        icon: Image.asset(
+                          'assets/images/google.webp',
+                          width: 2,
+                          height: 2,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                                Icons.error); // Fallback if image fails to load
+                          },
+                        ),
                         borderColor: Colors.grey.withOpacity(0.3),
                         backgroundColor: Colors.white,
                         textColor: Colors.black,
                         onPressed: () => _handleSocialLogin("Google"),
                       ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       // Apple button
                       _buildSocialButton(
                         text: "Continue with Apple",
@@ -271,9 +284,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         textColor: Colors.white,
                         onPressed: () => _handleSocialLogin("Apple"),
                       ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       // Facebook button
                       _buildSocialButton(
                         text: "Continue with Facebook",
@@ -282,9 +295,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         textColor: Colors.white,
                         onPressed: () => _handleSocialLogin("Facebook"),
                       ),
-                      
+
                       const SizedBox(height: 40),
-                      
+
                       // Bottom indicator
                       Container(
                         width: 40,
@@ -294,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
                     ],
                   ),
@@ -302,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          
+
           // Loading overlay
           if (_isLoading)
             Container(
@@ -334,7 +347,9 @@ class _LoginScreenState extends State<LoginScreen> {
           foregroundColor: textColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
-            side: borderColor != null ? BorderSide(color: borderColor) : BorderSide.none,
+            side: borderColor != null
+                ? BorderSide(color: borderColor)
+                : BorderSide.none,
           ),
         ),
         child: Row(
@@ -357,16 +372,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleSocialLogin(String provider) async {
     if (_isLoading) return;
-    
+
     setState(() {
       _isLoading = true;
-      _errorMessage = null; 
+      _errorMessage = null;
     });
 
     try {
       // Simulate network request
       await Future.delayed(const Duration(seconds: 2));
-      
+
       // Mock authentication logic
       if (provider == "Facebook") {
         // Example of handling a specific error
