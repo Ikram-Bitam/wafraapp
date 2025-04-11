@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: AfterLoginScreen(),
-  ));
+  runApp(const MyApp());
 }
 
-class AfterLoginScreen extends StatelessWidget {
-  const AfterLoginScreen({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'User Type Selector',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+        fontFamily: 'Roboto',
+      ),
+      home: const UserTypeScreen(),
+    );
+  }
+}
+
+class UserTypeScreen extends StatelessWidget {
+  const UserTypeScreen({Key? key}) : super(key: key);
+
+  void _navigateTo(BuildContext context, String userType) {
+    print("$userType selected");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Navigating to $userType")),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +51,7 @@ class AfterLoginScreen extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text(
               "Later",
               style: TextStyle(color: Colors.black, fontSize: 18),
@@ -45,7 +66,7 @@ class AfterLoginScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
 
-            // App Logo
+            // Updated App Logo
             Center(
               child: Image.asset(
                 'assets/images/logo.png',
@@ -70,57 +91,51 @@ class AfterLoginScreen extends StatelessWidget {
             const SizedBox(height: 40),
 
             const Text(
-              "What do you want to do ?",
+              "(business, charity, or individual)",
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            Container(
-              width: 120,
-              height: 3,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(1.5),
+                color: Colors.orange,
               ),
             ),
 
             const SizedBox(height: 20),
 
             const Text(
-              "Whatever your answer, you'll have access to all the features.",
+              "To better serve your needs, could you please specify your account type?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 20,
-                color: Colors.black87,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
 
             const SizedBox(height: 40),
 
-            OptionCard(
-              title: "Give",
-              description: "I want to empty my cupboards quickly and easily.",
-              onTap: () => debugPrint("Give selected"),
+            _buildOptionCard(
+              title: "Business/Organization",
+              description:
+                  "(For companies, institutions, or commercial entities managing transactions, teams, or services.)",
+              onTap: () => _navigateTo(context, "Business/Organization"),
             ),
 
             const SizedBox(height: 20),
 
-            OptionCard(
-              title: "Collect",
-              description: "I want to collect items around me for free.",
-              onTap: () => debugPrint("Collect selected"),
+            _buildOptionCard(
+              title: "Charity Society",
+              description:
+                  "(For registered NGOs, foundations, or charitable organizations with tax-exempt status.)",
+              onTap: () => _navigateTo(context, "Charity Society"),
             ),
 
             const SizedBox(height: 20),
 
-            OptionCard(
-              title: "Both",
-              description: "I want to donate and collect items.",
-              onTap: () => debugPrint("Both selected"),
+            _buildOptionCard(
+              title: "Individual User",
+              description:
+                  "(For personal use, non-commercial transactions, or individual accounts.)",
+              onTap: () => _navigateTo(context, "Individual User"),
             ),
 
             const SizedBox(height: 40),
@@ -141,22 +156,12 @@ class AfterLoginScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class OptionCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final VoidCallback onTap;
-
-  const OptionCard({
-    Key? key,
-    required this.title,
-    required this.description,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildOptionCard({
+    required String title,
+    required String description,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
@@ -166,6 +171,13 @@ class OptionCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.orange,
           borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.orange.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -176,7 +188,7 @@ class OptionCard extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -185,7 +197,7 @@ class OptionCard extends StatelessWidget {
                   Text(
                     description,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.white,
                     ),
                   ),

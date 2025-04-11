@@ -1,0 +1,2 @@
+D:/Bureau/wafraapp/android/app/.cxx/Debug/23401611/x86/CMakeFiles/edit_cache.dir
+D:/Bureau/wafraapp/android/app/.cxx/Debug/23401611/x86/CMakeFiles/rebuild_cache.dir
