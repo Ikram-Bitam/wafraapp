@@ -75,14 +75,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 60),
 
                       // App Logo
-                      Text(
-                        "وفرة",
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
-                      ),
+                       Center(
+              child: Image.asset(
+                'assets/images/logo.png',
+                height: 60,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      color: Colors.orange,
+                    ),
+                  );
+                },
+              ),
+            ),
+
 
                       const SizedBox(height: 20),
 
