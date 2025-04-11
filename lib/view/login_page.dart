@@ -1,47 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-void main() {
-  runApp(const LoginPage());
-}
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wafra App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const LoginScreen(),
-    );
-  }
-}
-
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
   bool _isLoading = false;
   String? _errorMessage;
-  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           // Background with blur effect
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: BackdropFilter(
@@ -62,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
-          // Content
+          // Content - Single Frame Layout
           SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Form(
-                  key: _formKey,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 60),
@@ -96,21 +65,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 15), // Reduced spacing
 
-                      // Tagline
-                      Text(
-                        "Together, let's start saving\nfamilies !",
+                      // Tagline - Made a bit smaller
+                      const Text(
+                        "Save families, Save food",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20, // Reduced from 28 to 24
                           fontWeight: FontWeight.w500,
-                          color: Colors.orange,
+                          color: Colors.black,
                         ),
                       ),
 
                       // Large blank space for possible future image
-                      const SizedBox(height: 120),
+                      const SizedBox(height: 200),
                       Container(
                         height: 200,
                         // Temporary background to verify container visibility
@@ -138,19 +107,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
-                      SizedBox(
-                        height: 50,
-                      ),
                       const Text(
                         "Connect with organizations and businesses to rescue surplus food, reduce waste, and make a positive environmental impact while saving money.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13, // Reduced from 14 to 13
                           color: Colors.black87,
                         ),
                       ),
 
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 30),
 
                       // Email field
                       TextFormField(
@@ -261,14 +227,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Error message if any
                       if (_errorMessage != null)
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
+                          padding: const EdgeInsets.only(bottom: 15.0),
                           child: Text(
                             _errorMessage!,
                             style: const TextStyle(color: Colors.red),
                           ),
                         ),
-
-                      const SizedBox(height: 24),
 
                       // Social login buttons
                       // Google button
@@ -276,11 +240,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Continue with Google",
                         icon: Image.asset(
                           'assets/images/google.webp',
-                          width: 2,
-                          height: 2,
+                          width: 24,
+                          height: 24,
                           errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                                Icons.error); // Fallback if image fails to load
+                            return const Icon(Icons.error);
                           },
                         ),
                         borderColor: Colors.grey.withOpacity(0.3),
@@ -289,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () => _handleSocialLogin("Google"),
                       ),
 
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 10), // Slightly reduced spacing
 
                       // Apple button
                       _buildSocialButton(
@@ -300,7 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () => _handleSocialLogin("Apple"),
                       ),
 
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 10), // Slightly reduced spacing
 
                       // Facebook button
                       _buildSocialButton(
@@ -311,7 +274,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () => _handleSocialLogin("Facebook"),
                       ),
 
-                      const SizedBox(height: 40),
+                      const SizedBox(
+                          height: 20), // Added more space as requested
+
+                      // Add "Autres" text under the Facebook button (smaller and grey)
+                      const Text(
+                        "Autres",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
 
                       // Bottom indicator
                       Container(
@@ -322,8 +297,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
-
-                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -354,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }) {
     return SizedBox(
       width: double.infinity,
-      height: 50,
+      height: 45, // Reduced button height from 50 to 45
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
@@ -375,7 +348,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Text(
               text,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 15, // Reduced text size from 16 to 15
                 color: textColor,
               ),
             ),
@@ -404,8 +377,10 @@ class _LoginScreenState extends State<LoginScreen> {
           _errorMessage = "Facebook login is temporarily unavailable";
         });
       } else {
-        // Handle successful login
+        // ignore: use_build_context_synchronously
+
         if (mounted) {
+          Navigator.of(context).pushNamed('/user');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Successfully logged in with $provider')),
           );
@@ -424,12 +399,5 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = false;
       });
     }
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 }
