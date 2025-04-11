@@ -43,13 +43,6 @@ class UserTypeScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text(
-          "Back",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -71,11 +64,11 @@ class UserTypeScreen extends StatelessWidget {
             Center(
               child: Image.asset(
                 'assets/images/logo.png',
-                height: 60,
+                height: 40,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                    height: 60,
-                    width: 60,
+                    height: 40,
+                    width: 40,
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(8),

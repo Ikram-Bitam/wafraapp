@@ -41,17 +41,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 60),
+                      const SizedBox(height: 40), // Reduced from 60
 
                       // App Logo
                       Center(
                         child: Image.asset(
                           'assets/images/logo.png',
-                          height: 60,
+                          height: 60, // Increased from 60
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
-                              height: 60,
-                              width: 60,
+                              height: 90,
+                              width: 90,
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(8),
@@ -59,30 +59,32 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: const Icon(
                                 Icons.image_not_supported,
                                 color: Colors.orange,
+                                size: 30,
                               ),
                             );
                           },
                         ),
                       ),
 
-                      const SizedBox(height: 15), // Reduced spacing
+                      const SizedBox(height: 10), // Further reduced spacing
 
-                      // Tagline - Made a bit smaller
+                      // Tagline
                       const Text(
-                        "Save families, Save food",
+                        "From What We Have, To Who Needs It Most",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20, // Reduced from 28 to 24
+                          fontSize: 23,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
 
-                      // Large blank space for possible future image
-                      const SizedBox(height: 200),
+                      const SizedBox(height: 30), // Reduced space before image
+
+                      // Image container - Made larger
                       Container(
-                        height: 200,
-                        // Temporary background to verify container visibility
+                        height: 260, // Increased from 200
+                        width: double.infinity,
                         child: Builder(
                           builder: (context) {
                             try {
@@ -92,31 +94,47 @@ class _LoginScreenState extends State<LoginScreen> {
                                 errorBuilder: (context, error, stackTrace) {
                                   print('Image error: $error');
                                   return Container(
-                                    color: Colors.yellow,
-                                    child: const Icon(Icons.error),
+                                    color: Colors.grey.withOpacity(0.1),
+                                    child: const Icon(
+                                      Icons.image,
+                                      size: 80,
+                                      color: Colors.grey,
+                                    ),
                                   );
                                 },
                               );
                             } catch (e) {
                               print('Widget error: $e');
                               return Container(
-                                color: Colors.blue,
-                                child: const Icon(Icons.warning),
+                                color: Colors.grey.withOpacity(0.1),
+                                child: const Icon(
+                                  Icons.image,
+                                  size: 80,
+                                  color: Colors.grey,
+                                ),
                               );
                             }
                           },
                         ),
                       ),
-                      const Text(
-                        "Connect with organizations and businesses to rescue surplus food, reduce waste, and make a positive environmental impact while saving money.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 13, // Reduced from 14 to 13
-                          color: Colors.black87,
+
+                      const SizedBox(height: 20),
+
+                      // Descriptive text
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: const Text(
+                          "Connect with organizations and businesses to rescue surplus food, reduce waste, and make a positive environmental impact while saving money.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.black87,
+                            height: 1.3,
+                          ),
                         ),
                       ),
 
-                      const SizedBox(height: 20), // Reduced spacing
+                      const SizedBox(height: 25),
 
                       // Error message if any
                       if (_errorMessage != null)
@@ -124,7 +142,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.only(bottom: 15.0),
                           child: Text(
                             _errorMessage!,
-                            style: const TextStyle(color: Colors.red),
+                            style: const TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
 
@@ -137,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 24,
                           height: 24,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.error);
+                            return const Icon(Icons.g_mobiledata, size: 24);
                           },
                         ),
                         borderColor: Colors.grey.withOpacity(0.3),
@@ -146,51 +167,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () => _handleSocialLogin("Google"),
                       ),
 
-                      const SizedBox(height: 10), // Slightly reduced spacing
+                      const SizedBox(height: 18),
 
                       // Apple button
                       _buildSocialButton(
                         text: "Continue with Apple",
-                        icon: const Icon(Icons.apple, color: Colors.white),
+                        icon: const Icon(Icons.apple,
+                            color: Colors.white, size: 24),
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
                         onPressed: () => _handleSocialLogin("Apple"),
                       ),
 
-                      const SizedBox(height: 10), // Slightly reduced spacing
+                      const SizedBox(height: 18),
 
                       // Facebook button
                       _buildSocialButton(
                         text: "Continue with Facebook",
-                        icon: const Icon(Icons.facebook, color: Colors.white),
+                        icon: const Icon(Icons.facebook,
+                            color: Colors.white, size: 24),
                         backgroundColor: Colors.blue,
                         textColor: Colors.white,
                         onPressed: () => _handleSocialLogin("Facebook"),
                       ),
 
-                      const SizedBox(
-                          height: 20), // Added more space as requested
+                      const SizedBox(height: 18),
 
-                      // Add "Autres" text under the Facebook button (smaller and grey)
+                      // "Autres" text with no underline
                       const Text(
                         "Autres",
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                           color: Colors.grey,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
 
-                      const SizedBox(height: 20),
-
-                      // Bottom indicator
-                      Container(
-                        width: 40,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),
@@ -221,12 +234,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }) {
     return SizedBox(
       width: double.infinity,
-      height: 45, // Reduced button height from 50 to 45
-      child: TextButton(
+      height: 48,
+      child: ElevatedButton(
         onPressed: onPressed,
-        style: TextButton.styleFrom(
+        style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
+          elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
             side: borderColor != null
@@ -242,8 +256,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Text(
               text,
               style: TextStyle(
-                fontSize: 15, // Reduced text size from 16 to 15
+                fontSize: 15,
                 color: textColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
@@ -271,17 +286,11 @@ class _LoginScreenState extends State<LoginScreen> {
           _errorMessage = "Facebook login is temporarily unavailable";
         });
       } else {
-        // ignore: use_build_context_synchronously
-
         if (mounted) {
           Navigator.of(context).pushNamed('/user');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Successfully logged in with $provider')),
           );
-          // Navigate to home page or next screen
-          // Navigator.of(context).pushReplacement(
-          //   MaterialPageRoute(builder: (context) => HomePage()),
-          // );
         }
       }
     } catch (e) {

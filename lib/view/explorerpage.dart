@@ -1,26 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wafra Explorer',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const ExplorerPage(),
-    );
-  }
-}
-
 class ExplorerPage extends StatefulWidget {
   const ExplorerPage({Key? key}) : super(key: key);
 
@@ -517,9 +496,14 @@ class _ExplorerPageState extends State<ExplorerPage> {
         children: List.generate(navItems.length, (index) {
           return InkWell(
             onTap: () {
-              setState(() {
-                _selectedIndex = index;
-              });
+              if (index == 2) {
+                // Index 2 is for "Create"
+                _showCreateOptions(context);
+              } else {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              }
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -542,6 +526,81 @@ class _ExplorerPageState extends State<ExplorerPage> {
           );
         }),
       ),
+    );
+  }
+
+  void _showCreateOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Center(
+                    child: Text(
+                      'Donation',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Handle donation action
+                  },
+                ),
+                Divider(height: 0, thickness: 1),
+                ListTile(
+                  title: Center(
+                    child: Text(
+                      'Request',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Handle request action
+                  },
+                ),
+                Divider(height: 0, thickness: 1),
+                ListTile(
+                  title: Center(
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                SizedBox(height: 8),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
