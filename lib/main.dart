@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:testt/view/explorerpage.dart';
 import 'package:testt/view/login_page.dart';
+import 'package:testt/view/usertype.dart';
 //import 'package:testt/view/login_page.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -25,10 +26,23 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
           ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         ),
       ),
-      home: const LoginPage(),
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/explore': (context) => const ExplorerPage(),
+        '/user': (context) => const UserTypeScreen()
+      },
+      onUnknownRoute: (settings) => MaterialPageRoute(
+        builder: (context) => const Scaffold(
+          body: Center(
+            child: Text('404 Not Found'),
+          ),
+        ),
+      ),
+      initialRoute: '/',
     );
   }
 }

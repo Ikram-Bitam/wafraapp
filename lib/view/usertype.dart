@@ -22,13 +22,14 @@ class MyApp extends StatelessWidget {
 }
 
 class UserTypeScreen extends StatelessWidget {
-  const UserTypeScreen({Key? key}) : super(key: key);
+  const UserTypeScreen({super.key});
 
   void _navigateTo(BuildContext context, String userType) {
     print("$userType selected");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Navigating to $userType")),
-    );
+    Navigator.pushNamed(context, '/explore', arguments: userType);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(content: Text("Navigating to $userType")),
+    // );
   }
 
   @override
