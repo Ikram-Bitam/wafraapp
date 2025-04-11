@@ -75,12 +75,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 60),
 
                       // App Logo
-                      Text(
-                        "وفرة",
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
+                      Center(
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          height: 60,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(
+                                Icons.image_not_supported,
+                                color: Colors.orange,
+                              ),
+                            );
+                          },
                         ),
                       ),
 
@@ -98,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       // Large blank space for possible future image
-                      const SizedBox(height: 200),
+                      const SizedBox(height: 120),
                       Container(
                         height: 200,
                         // Temporary background to verify container visibility
@@ -126,6 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
+                      SizedBox(
+                        height: 50,
+                      ),
                       const Text(
                         "Connect with organizations and businesses to rescue surplus food, reduce waste, and make a positive environmental impact while saving money.",
                         textAlign: TextAlign.center,
@@ -135,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 40),
 
                       // Email field
                       TextFormField(
