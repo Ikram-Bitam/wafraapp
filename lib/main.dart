@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:testt/view/donate.dart';
+import 'package:testt/view/editprofile.dart';
 import 'package:testt/view/explorerpage.dart';
 import 'package:testt/view/login_page.dart';
+import 'package:testt/view/messages.dart';
+import 'package:testt/view/profile.dart';
 import 'package:testt/view/usertype.dart';
 //import 'package:testt/view/login_page.dart';
 
@@ -36,6 +39,9 @@ class MyApp extends StatelessWidget {
         '/explore': (context) => const ExplorerPage(),
         '/user': (context) => const UserTypeScreen(),
         '/offer': (context) => const Donate(),
+        '/profile': (context) => const ProfilePage(),
+        '/msg': (context) => const MessagesPage(),
+        '/edit': (context) => const EditProfilePage(),
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => const Scaffold(

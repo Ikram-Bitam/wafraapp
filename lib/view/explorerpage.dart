@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart'; // Add this import
 
 class ExplorerPage extends StatefulWidget {
   const ExplorerPage({Key? key}) : super(key: key);
@@ -20,6 +21,72 @@ class _ExplorerPageState extends State<ExplorerPage> {
     'offer2': true,
     'offer3': false,
   };
+
+  // Add image data for items
+  final Map<String, Map<String, String>> _itemData = {
+    'vegetables': {
+      'title': 'Fresh Vegetables',
+      'image': 'assets/images/vegetables.jpg',
+      'distance': '0.5 km away',
+      'discountedPrice': '180 DA',
+      'originalPrice': '300 DA',
+    },
+    'pastries': {
+      'title': 'Pastries & Cakes',
+      'image': 'assets/images/cake.jpg',
+      'distance': '0.6 km away',
+      'discountedPrice': '80 DA',
+      'originalPrice': '200 DA',
+    },
+    'furniture': {
+      'title': 'Furniture',
+      'image': 'assets/images/furniture.jpg',
+      'distance': '2 km away',
+      'discountedPrice': 'FREE',
+      'originalPrice': '200 DA',
+    },
+    'fruits': {
+      'title': 'Fresh Fruits',
+      'image': 'assets/images/fruits.jpg',
+      'distance': '0.3 km away',
+      'discountedPrice': '2000 DA',
+      'originalPrice': '500 DA',
+    },
+    'electronics': {
+      'title': 'Electronics',
+      'image': 'assets/images/electronics.jpg',
+      'distance': '3 km away',
+      'discountedPrice': '700 DA',
+      'originalPrice': '200 DA',
+    },
+  };
+
+  // Add data for special offers
+  final List<Map<String, String>> _specialOffers = [
+    {
+      'id': 'offer1',
+      'title': 'Monthly Special Offer',
+      'discount': '70% OFF',
+      'description':
+          "Don't miss out on incredible savings for fresh, high-quality produce! Limited time only!",
+      'image': 'assets/images/monthely-unsplash.jpg',
+    },
+    {
+      'id': 'offer2',
+      'title': 'Weekend Special Offer',
+      'discount': '50% OFF',
+      'description': "Get amazing discounts on fresh produce!",
+      'image': 'assets/images/weekendoffer-unsplash.jpg',
+    },
+    {
+      'id': 'offer3',
+      'title': 'Ramadan Special Offer',
+      'discount': 'Free',
+      'description':
+          "Celebrate Ramadan with savings! Discounts on farm-fresh produce to fill your table with barakah.",
+      'image': 'assets/images/ramadan.jpg',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -109,66 +176,79 @@ class _ExplorerPageState extends State<ExplorerPage> {
             ],
           ),
           const SizedBox(height: 8),
-          // Map container
+          // Map container with improved image handling
           Container(
             height: 200,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/map.png'),
-                fit: BoxFit.cover,
-              ),
             ),
-            child: Stack(
-              children: [
-                // Fallback if map image fails to load
-                Center(
-                  child: Text(
-                    "Batna",
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                // Markers can be added here
-                Positioned(
-                  right: 80,
-                  bottom: 70,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      shape: BoxShape.circle,
-                    ),
-                    child:
-                        Icon(Icons.location_on, color: Colors.white, size: 16),
-                  ),
-                ),
-                Positioned(
-                  left: 70,
-                  bottom: 80,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 3,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Stack(
+                children: [
+                  // Map image with error handling
+                  Image.asset(
+                    'assets/images/map.png',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 200,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.map, size: 50, color: Colors.grey[400]),
+                            Text(
+                              "Batna",
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child:
-                        Icon(Icons.restaurant, color: Colors.orange, size: 16),
+                      );
+                    },
                   ),
-                ),
-              ],
+                  // Markers can be added here
+                  Positioned(
+                    right: 80,
+                    bottom: 70,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.location_on,
+                          color: Colors.white, size: 16),
+                    ),
+                  ),
+                  Positioned(
+                    left: 70,
+                    bottom: 80,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                          ),
+                        ],
+                      ),
+                      child: Icon(Icons.restaurant,
+                          color: Colors.orange, size: 16),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -199,18 +279,26 @@ class _ExplorerPageState extends State<ExplorerPage> {
           bool isSelected = index == 0; // Default to "All" selected
           return Padding(
             padding: const EdgeInsets.only(right: 10.0),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: isSelected ? Colors.orange : Colors.grey[200],
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  filters[index],
-                  style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.black54,
-                    fontWeight: FontWeight.w500,
+            child: GestureDetector(
+              onTap: () {
+                // Add filter functionality
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.orange : Colors.grey[200],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    filters[index],
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black54,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
@@ -264,47 +352,22 @@ class _ExplorerPageState extends State<ExplorerPage> {
   Widget _buildRecommendedItems() {
     return SizedBox(
       height: 300,
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: [
-          _buildRecommendedItemCard(
-            'Fresh Vegetables',
-            'assets/images/vegetables.jpg',
-            'vegetables',
-          ),
-          _buildRecommendedItemCard(
-            'Pastries & Cakes',
-            'assets/images/pastries.jpg',
-            'pastries',
-            distance: '0.6 km away',
-            discountedPrice: '80 DA',
-            originalPrice: '200 DA',
-          ),
-          _buildRecommendedItemCard(
-            'Furniture',
-            'assets/images/furniture.jpg',
-            'furniture',
-            distance: '2 km away',
-            discountedPrice: 'FREE',
-            originalPrice: '200 DA',
-          ),
-          _buildRecommendedItemCard(
-            'Fresh Fruits',
-            'assets/images/fruits.jpg',
-            'fruits',
-            distance: '0.3 km away',
-            discountedPrice: '2000 DA',
-            originalPrice: '500 DA',
-          ),
-          _buildRecommendedItemCard(
-            'Electronics',
-            'assets/images/electronics.jpg',
-            'electronics',
-            distance: '3 km away',
-            discountedPrice: '700 DA',
-            originalPrice: '200 DA',
-          ),
-        ],
+        itemCount: _itemData.length,
+        itemBuilder: (context, index) {
+          final String key = _itemData.keys.elementAt(index);
+          final Map<String, String> data = _itemData[key]!;
+
+          return _buildRecommendedItemCard(
+            data['title'] ?? 'Unknown Item',
+            data['image'] ?? '',
+            key,
+            distance: data['distance'] ?? '1 km away',
+            discountedPrice: data['discountedPrice'] ?? '0 DA',
+            originalPrice: data['originalPrice'] ?? '0 DA',
+          );
+        },
       ),
     );
   }
@@ -341,15 +404,10 @@ class _ExplorerPageState extends State<ExplorerPage> {
             child: Container(
               height: 180,
               width: double.infinity,
-              color: Colors.grey[300],
               child: Stack(
                 children: [
-                  // Placeholder for image
-                  Container(
-                    height: 180,
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                  ),
+                  // Improved image loading
+                  _loadImage(imagePath, width: double.infinity, height: 180),
                   // Favorite button with tap functionality
                   Positioned(
                     top: 10,
@@ -377,6 +435,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                       ),
                     ),
                   ),
+                  // Sale tag if discounted
                 ],
               ),
             ),
@@ -393,17 +452,23 @@ class _ExplorerPageState extends State<ExplorerPage> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
                     Icon(Icons.location_on, color: Colors.grey, size: 14),
                     const SizedBox(width: 4),
-                    Text(
-                      distance,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
+                    Expanded(
+                      child: Text(
+                        distance,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -441,28 +506,19 @@ class _ExplorerPageState extends State<ExplorerPage> {
   Widget _buildSpecialOffers() {
     return SizedBox(
       height: 180,
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: [
-          _buildSpecialOfferCard(
-            'Monthly Special Offer',
-            '70% OFF',
-            "Don't miss out on incredible savings for fresh, high-quality produce! Limited time only!",
-            'offer1',
-          ),
-          _buildSpecialOfferCard(
-            'Weekend Special Offer',
-            '50% OFF',
-            "Get amazing discounts on fresh produce!",
-            'offer2',
-          ),
-          _buildSpecialOfferCard(
-            'Ramadan Special Offer',
-            'Free',
-            "Celebrate Ramadan with savings! Discounts on farm-fresh produce to fill your table with barakah.",
-            'offer3',
-          ),
-        ],
+        itemCount: _specialOffers.length,
+        itemBuilder: (context, index) {
+          final offer = _specialOffers[index];
+          return _buildSpecialOfferCard(
+            offer['title']!,
+            offer['discount']!,
+            offer['description']!,
+            offer['id']!,
+            offer['image']!,
+          );
+        },
       ),
     );
   }
@@ -472,6 +528,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
     String discount,
     String description,
     String id,
+    String imagePath,
   ) {
     return Container(
       width: 320,
@@ -487,96 +544,149 @@ class _ExplorerPageState extends State<ExplorerPage> {
             offset: const Offset(0, 2),
           ),
         ],
-        image: const DecorationImage(
-          image: AssetImage('assets/images/special_offer.jpg'),
-          fit: BoxFit.cover,
-        ),
       ),
-      child: Stack(
-        children: [
-          // Gradient overlay for better text visibility
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black.withOpacity(0.7),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          children: [
+            // Improved image loading
+            _loadImage(imagePath, width: 320, height: 180),
+            // Gradient overlay for better text visibility
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.7),
+                  ],
+                ),
+              ),
+            ),
+            // Content
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      discount,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
-          ),
-          // Content
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            // Favorite button with toggling functionality
+            Positioned(
+              top: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _favorites[id] = !(_favorites[id] ?? false);
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    discount,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 14,
                     color: Colors.white.withOpacity(0.8),
+                    shape: BoxShape.circle,
                   ),
-                ),
-              ],
-            ),
-          ),
-          // Favorite button with toggling functionality
-          Positioned(
-            top: 10,
-            right: 10,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _favorites[id] = !(_favorites[id] ?? false);
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.8),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  _favorites[id] ?? false ? Icons.star : Icons.star_border,
-                  color: Colors.orange,
-                  size: 20,
+                  child: Icon(
+                    _favorites[id] ?? false ? Icons.star : Icons.star_border,
+                    color: Colors.orange,
+                    size: 20,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  // Helper method for image loading with fallback
+  Widget _loadImage(String path, {double? width, double? height}) {
+    // Check if it's a network image
+    if (path.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: path,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Container(
+          color: Colors.grey[200],
+          child: Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            ),
+          ),
+        ),
+        errorWidget: (context, url, error) => Container(
+          color: Colors.grey[200],
+          child: Icon(
+            Icons.image_not_supported,
+            color: Colors.grey[500],
+            size: 40,
+          ),
+        ),
+      );
+    }
+    // Local asset image
+    else {
+      return Image.asset(
+        path,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            width: width,
+            height: height,
+            color: Colors.grey[200],
+            child: Icon(
+              Icons.image_not_supported,
+              color: Colors.grey[500],
+              size: 40,
+            ),
+          );
+        },
+      );
+    }
   }
 
   Widget _buildBottomNavBar() {
@@ -604,6 +714,12 @@ class _ExplorerPageState extends State<ExplorerPage> {
               if (index == 2) {
                 // Index 2 is for "Create"
                 _showCreateOptions(context);
+              } else if (index == 3) {
+                // Index 3 is for "Messages"
+                Navigator.pushNamed(context, '/msg');
+              } else if (index == 4) {
+                // Index 4 is for "Profile"
+                Navigator.pushNamed(context, '/profile');
               } else {
                 setState(() {
                   _selectedIndex = index;

@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cached_network_image: ^3.2.3
   flutter:
     sdk: flutter
 
@@ -63,6 +64,15 @@ flutter:
     - assets/images/google.webp
     - assets/images/signup.png
     - assets/images/logo.png
+    - assets/images/vegetables.jpg
+    - assets/images/cake.jpg
+    - assets/images/furniture.jpg
+    - assets/images/fruits.jpg
+    - assets/images/electronics.jpg
+    - assets/images/weekendoffer-unsplash.jpg
+    - assets/images/monthely-unsplash.jpg
+    - assets/images/ramadan.jpg
+    
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
