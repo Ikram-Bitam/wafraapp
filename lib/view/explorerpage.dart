@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExplorerPage extends StatefulWidget {
-  const ExplorerPage({Key? key}) : super(key: key);
+  const ExplorerPage({super.key});
 
   @override
   State<ExplorerPage> createState() => _ExplorerPageState();
@@ -366,7 +366,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
   }
 
   Widget _buildSpecialOffers() {
-    return Container(
+    return SizedBox(
       height: 180,
       child: ListView(
         scrollDirection: Axis.horizontal,
