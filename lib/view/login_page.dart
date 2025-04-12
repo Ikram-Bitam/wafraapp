@@ -1,5 +1,29 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+// AuthService class for handling authentication
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) return null;
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      return await _auth.signInWithCredential(credential);
+    } catch (e) {
+      print('Error signing in with Google: $e');
+      return null;
+    }
+  }
+}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +35,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   String? _errorMessage;
+  // Add the AuthService instance
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 30), // Reduced space before image
 
                       // Image container - Made larger
-                      Container(
+                      SizedBox(
                         height: 260, // Increased from 200
                         width: double.infinity,
                         child: Builder(
@@ -164,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderColor: Colors.grey.withOpacity(0.3),
                         backgroundColor: Colors.white,
                         textColor: Colors.black,
-                        onPressed: () => _handleSocialLogin("Google"),
+                        onPressed: () => _handleGoogleSignIn(),
                       ),
 
                       const SizedBox(height: 18),
@@ -267,6 +293,47 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // Updated Google Sign-In method
+  Future<void> _handleGoogleSignIn() async {
+    if (_isLoading) return;
+
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final UserCredential? userCredential = await _authService.signInWithGoogle();
+      
+      if (userCredential != null) {
+        // Print user information
+        print("User: ${userCredential.user!.displayName}");
+        print("User ID: ${userCredential.user!.uid}");
+        print("User Email: ${userCredential.user!.email}");
+        
+        if (mounted) {
+          Navigator.of(context).pushNamed('/user');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Successfully logged in with Google')),
+          );
+        }
+      } else {
+        setState(() {
+          _errorMessage = "Google sign-in was cancelled or failed";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = "An error occurred during Google sign-in: ${e.toString()}";
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  // The original method kept for other social logins
   void _handleSocialLogin(String provider) async {
     if (_isLoading) return;
 

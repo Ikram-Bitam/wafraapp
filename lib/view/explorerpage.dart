@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExplorerPage extends StatefulWidget {
-  const ExplorerPage({Key? key}) : super(key: key);
+  const ExplorerPage({super.key});
 
   @override
   State<ExplorerPage> createState() => _ExplorerPageState();

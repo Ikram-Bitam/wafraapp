@@ -3,9 +3,14 @@ import 'package:testt/view/donate.dart';
 import 'package:testt/view/explorerpage.dart';
 import 'package:testt/view/login_page.dart';
 import 'package:testt/view/usertype.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 //import 'package:testt/view/login_page.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
@@ -16,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Wafra App',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Roboto',
