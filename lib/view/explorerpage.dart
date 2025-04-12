@@ -9,6 +9,17 @@ class ExplorerPage extends StatefulWidget {
 
 class _ExplorerPageState extends State<ExplorerPage> {
   int _selectedIndex = 0;
+  // Add a map to track favorite status of items
+  Map<String, bool> _favorites = {
+    'vegetables': false,
+    'pastries': false,
+    'furniture': false,
+    'fruits': false,
+    'electronics': false,
+    'offer1': true,
+    'offer2': true,
+    'offer3': false,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +47,25 @@ class _ExplorerPageState extends State<ExplorerPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Logo in orange
-          Text(
-            "وفرة",
-            style: TextStyle(
-              fontSize: 28,
-              color: Colors.orange,
-              fontWeight: FontWeight.bold,
+          Center(
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 30,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 90,
+                  width: 90,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.image_not_supported,
+                    color: Colors.orange,
+                    size: 30,
+                  ),
+                );
+              },
             ),
           ),
           // Notification bell
@@ -246,17 +270,53 @@ class _ExplorerPageState extends State<ExplorerPage> {
           _buildRecommendedItemCard(
             'Fresh Vegetables',
             'assets/images/vegetables.jpg',
+            'vegetables',
           ),
           _buildRecommendedItemCard(
             'Pastries & Cakes',
             'assets/images/pastries.jpg',
+            'pastries',
+            distance: '0.6 km away',
+            discountedPrice: '80 DA',
+            originalPrice: '200 DA',
+          ),
+          _buildRecommendedItemCard(
+            'Furniture',
+            'assets/images/furniture.jpg',
+            'furniture',
+            distance: '2 km away',
+            discountedPrice: 'FREE',
+            originalPrice: '200 DA',
+          ),
+          _buildRecommendedItemCard(
+            'Fresh Fruits',
+            'assets/images/fruits.jpg',
+            'fruits',
+            distance: '0.3 km away',
+            discountedPrice: '2000 DA',
+            originalPrice: '500 DA',
+          ),
+          _buildRecommendedItemCard(
+            'Electronics',
+            'assets/images/electronics.jpg',
+            'electronics',
+            distance: '3 km away',
+            discountedPrice: '700 DA',
+            originalPrice: '200 DA',
           ),
         ],
       ),
     );
   }
 
-  Widget _buildRecommendedItemCard(String title, String imagePath) {
+  Widget _buildRecommendedItemCard(
+    String title,
+    String imagePath,
+    String id, {
+    String distance = '1 km away',
+    String discountedPrice = '220 DA',
+    String originalPrice = '500 DA',
+  }) {
     return Container(
       width: 220,
       margin: const EdgeInsets.only(right: 15.0, bottom: 10.0),
@@ -275,7 +335,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Item image
+          // Item image with favorite button
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             child: Container(
@@ -290,18 +350,31 @@ class _ExplorerPageState extends State<ExplorerPage> {
                     width: double.infinity,
                     color: Colors.grey[200],
                   ),
-                  // Favorite button
+                  // Favorite button with tap functionality
                   Positioned(
                     top: 10,
                     right: 10,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.8),
-                        shape: BoxShape.circle,
+                    child: GestureDetector(
+                      onTap: () {
+                        // Toggle favorite state
+                        setState(() {
+                          _favorites[id] = !(_favorites[id] ?? false);
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _favorites[id] ?? false
+                              ? Icons.star
+                              : Icons.star_border,
+                          color: Colors.orange,
+                          size: 20,
+                        ),
                       ),
-                      child: Icon(Icons.star_border,
-                          color: Colors.orange, size: 20),
                     ),
                   ),
                 ],
@@ -327,7 +400,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                     Icon(Icons.location_on, color: Colors.grey, size: 14),
                     const SizedBox(width: 4),
                     Text(
-                      "2.5 km away",
+                      distance,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -340,7 +413,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "250 DA",
+                      discountedPrice,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -348,7 +421,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                       ),
                     ),
                     Text(
-                      "500 DA",
+                      originalPrice,
                       style: TextStyle(
                         fontSize: 14,
                         decoration: TextDecoration.lineThrough,
@@ -366,19 +439,40 @@ class _ExplorerPageState extends State<ExplorerPage> {
   }
 
   Widget _buildSpecialOffers() {
-    return Container(
+    return SizedBox(
       height: 180,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          _buildSpecialOfferCard(),
-          _buildSpecialOfferCard(),
+          _buildSpecialOfferCard(
+            'Monthly Special Offer',
+            '70% OFF',
+            "Don't miss out on incredible savings for fresh, high-quality produce! Limited time only!",
+            'offer1',
+          ),
+          _buildSpecialOfferCard(
+            'Weekend Special Offer',
+            '50% OFF',
+            "Get amazing discounts on fresh produce!",
+            'offer2',
+          ),
+          _buildSpecialOfferCard(
+            'Ramadan Special Offer',
+            'Free',
+            "Celebrate Ramadan with savings! Discounts on farm-fresh produce to fill your table with barakah.",
+            'offer3',
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSpecialOfferCard() {
+  Widget _buildSpecialOfferCard(
+    String title,
+    String discount,
+    String description,
+    String id,
+  ) {
     return Container(
       width: 320,
       margin: const EdgeInsets.only(right: 15.0),
@@ -429,7 +523,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    "50% OFF",
+                    discount,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -438,7 +532,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Weekend Special Offer",
+                  title,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -447,7 +541,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "Get amazing discounts on fresh produce!",
+                  description,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white.withOpacity(0.8),
@@ -456,17 +550,28 @@ class _ExplorerPageState extends State<ExplorerPage> {
               ],
             ),
           ),
-          // Favorite button
+          // Favorite button with toggling functionality
           Positioned(
             top: 10,
             right: 10,
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
-                shape: BoxShape.circle,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _favorites[id] = !(_favorites[id] ?? false);
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.8),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  _favorites[id] ?? false ? Icons.star : Icons.star_border,
+                  color: Colors.orange,
+                  size: 20,
+                ),
               ),
-              child: Icon(Icons.star, color: Colors.orange, size: 20),
             ),
           ),
         ],
@@ -549,7 +654,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                 ListTile(
                   title: Center(
                     child: Text(
-                      'Donation',
+                      'Offer',
                       style: TextStyle(
                         color: Colors.blue,
                         fontSize: 18,
@@ -559,6 +664,23 @@ class _ExplorerPageState extends State<ExplorerPage> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
+                    // Handle donation action
+                  },
+                ),
+                Divider(height: 0, thickness: 1),
+                ListTile(
+                  title: Center(
+                    child: Text(
+                      'Donate',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/offer');
                     // Handle donation action
                   },
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testt/view/donate.dart';
 import 'package:testt/view/explorerpage.dart';
 import 'package:testt/view/login_page.dart';
 import 'package:testt/view/usertype.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginScreen(),
         '/explore': (context) => const ExplorerPage(),
-        '/user': (context) => const UserTypeScreen()
+        '/user': (context) => const UserTypeScreen(),
+        '/offer': (context) => const Donate(),
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => const Scaffold(
