@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart'; // Add this import
 
 class ExplorerPage extends StatefulWidget {
-  const ExplorerPage({Key? key}) : super(key: key);
+  const ExplorerPage({super.key});
 
   @override
   State<ExplorerPage> createState() => _ExplorerPageState();

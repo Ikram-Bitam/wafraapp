@@ -8,7 +8,7 @@ void main() {
 }
 
 class AfterLoginScreen extends StatelessWidget {
-  const AfterLoginScreen({Key? key}) : super(key: key);
+  const AfterLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -149,11 +149,11 @@ class OptionCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const OptionCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
