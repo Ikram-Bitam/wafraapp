@@ -11,8 +11,10 @@ class AuthService {
   Future<UserCredential?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      print("Google Sign-In process completed");
       if (googleUser == null) return null;
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -303,14 +305,15 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final UserCredential? userCredential = await _authService.signInWithGoogle();
-      
+      final UserCredential? userCredential =
+          await _authService.signInWithGoogle();
+
       if (userCredential != null) {
         // Print user information
         print("User: ${userCredential.user!.displayName}");
         print("User ID: ${userCredential.user!.uid}");
         print("User Email: ${userCredential.user!.email}");
-        
+
         if (mounted) {
           Navigator.of(context).pushNamed('/user');
           ScaffoldMessenger.of(context).showSnackBar(
@@ -324,7 +327,8 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = "An error occurred during Google sign-in: ${e.toString()}";
+        _errorMessage =
+            "An error occurred during Google sign-in: ${e.toString()}";
       });
     } finally {
       setState(() {

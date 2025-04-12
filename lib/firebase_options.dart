@@ -61,6 +61,8 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAJrb1nf5-ZNQ3X0uKs5-GguwhYmg4axSY',
     appId: '1:1027872697293:ios:b97f0927f5ed000e883284',
+    iosClientId:
+        '1027872697293-0j8q2v1f4g5k6c7h8g9h0g.apps.googleusercontent.com',
     messagingSenderId: '1027872697293',
     projectId: 'wafraapp-127e2',
     storageBucket: 'wafraapp-127e2.firebasestorage.app',
