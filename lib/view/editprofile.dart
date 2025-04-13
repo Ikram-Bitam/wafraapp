@@ -45,10 +45,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      title: Text(
+      title: const Text(
         "Edit Profile",
         style: TextStyle(
           color: Colors.black,
@@ -58,10 +58,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       actions: [
         TextButton(
           onPressed: _saveProfile,
-          child: Text(
+          child: const Text(
             "Save",
             style: TextStyle(
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
@@ -89,7 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       padding: const EdgeInsets.symmetric(vertical: 30),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
@@ -98,7 +98,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -128,11 +128,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   image: DecorationImage(
                     image: AssetImage(_profileImagePath),
                     fit: BoxFit.cover,
-                    onError: (_, __) {},
+                    onError: (exception, stackTrace) {
+                      // Log or update state in case of error loading the image
+                      debugPrint('Error loading profile image: $exception');
+                    },
                   ),
                 ),
                 child: _isImageLoading
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(
                           valueColor:
                               AlwaysStoppedAnimation<Color>(Colors.orange),
@@ -146,14 +149,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 0, 0, 0),
+                    color: Colors.black,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: Colors.white,
                       width: 2,
                     ),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.camera_alt,
                     color: Colors.white,
                     size: 20,
@@ -163,10 +166,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ],
           ),
           const SizedBox(height: 10),
-          Text(
+          const Text(
             "Change Profile Photo",
             style: TextStyle(
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -224,7 +227,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: Colors.black87,
@@ -273,8 +276,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           labelText: "Bio",
           labelStyle: TextStyle(color: Colors.grey[600]),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.only(bottom: 80),
+          prefixIcon: const Padding(
+            padding: EdgeInsets.only(bottom: 80),
             child: Icon(Icons.edit_note_outlined, color: Colors.orange),
           ),
           border: InputBorder.none,
@@ -308,10 +311,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Widget _buildSwitchOption(String title, String subtitle, bool initialValue) {
-    bool value = initialValue;
-
+    // Using StatefulBuilder to manage local state for the switch
     return StatefulBuilder(
       builder: (context, setState) {
+        bool value = initialValue;
         return Container(
           margin: const EdgeInsets.only(bottom: 8.0),
           decoration: BoxDecoration(
@@ -321,7 +324,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: ListTile(
             title: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -380,7 +383,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         leading: Icon(icon, color: Colors.orange),
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -391,13 +394,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Colors.grey[600],
           ),
         ),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () {
           // Handle tap for each setting
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('$title settings coming soon'),
-              duration: Duration(seconds: 1),
+              duration: const Duration(seconds: 1),
             ),
           );
         },
@@ -412,13 +415,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
           onPressed: _saveProfile,
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.orange,
-            minimumSize: Size(double.infinity, 55),
+            minimumSize: const Size(double.infinity, 55),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
             elevation: 0,
           ),
-          child: Text(
+          child: const Text(
             "Save Changes",
             style: TextStyle(
               fontSize: 16,
@@ -430,7 +433,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           style: TextButton.styleFrom(
-            minimumSize: Size(double.infinity, 55),
+            minimumSize: const Size(double.infinity, 55),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
               side: BorderSide(color: Colors.grey[300]!),
@@ -475,16 +478,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
 
     // Simulate image selection delay
-    Future.delayed(Duration(seconds: 1), () {
-      // In a real app, you would implement image picker functionality here
+    Future.delayed(const Duration(seconds: 1), () {
+      // In a real app, implement the image picker functionality here and update _profileImagePath accordingly
       setState(() {
         _isImageLoading = false;
-        // _profileImagePath would be updated with the new image path
+        // _profileImagePath can be updated with the new image path
       });
 
-      // Show feedback to user
+      // Provide feedback to user
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Profile picture updated'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
@@ -499,7 +502,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
@@ -508,20 +511,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
 
     // Simulate saving delay
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       // Close loading dialog
       Navigator.pop(context);
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Profile updated successfully'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
         ),
       );
 
-      // Navigate back
+      // Navigate back to the previous screen
       Navigator.pop(context);
     });
   }
@@ -534,8 +537,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: Text("Logout"),
-          content: Text("Are you sure you want to logout?"),
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -547,15 +550,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context); // Close dialog
-                // In a real app, implement logout functionality
+                // Implement logout functionality here in a real app.
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text('Logged out successfully'),
                     backgroundColor: Colors.orange,
                     duration: Duration(seconds: 2),
                   ),
                 );
-                // Navigate to login screen
+                // Navigate to login screen or initial screen.
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
               style: ElevatedButton.styleFrom(
@@ -564,7 +567,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Text("Logout"),
+              child: const Text("Logout"),
             ),
           ],
         );
