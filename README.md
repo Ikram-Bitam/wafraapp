@@ -1,16 +1,29 @@
-# testt
+# WAFRA – Smart Donation & Low-Cost Marketplace App
 
-A new Flutter project.
+WAFRA is a smart platform that connects businesses, individuals, and charities to reduce waste and improve the distribution of donations in Algeria.
 
-## Getting Started
+## 🚀 Features
 
-This project is a starting point for a Flutter application.
+* Donate unused items easily
+* Low-cost marketplace for affordable goods
+* Connect with charity organizations
+* Reduce food and material waste
+* Smart and simple user experience
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* **Flutter** – Cross-platform mobile development
+* **Firebase** – Authentication, database, and backend services
+* **Figma** – UI/UX design and prototyping
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📸 Screenshots
+
+*Add your app screenshots here*
+
+## 📅 Last Update
+
+April 2026
+
+## 💡 Vision
+
+To build a sustainable ecosystem where resources are reused, waste is minimized, and communities support each other efficiently.
