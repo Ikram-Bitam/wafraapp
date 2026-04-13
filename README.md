@@ -16,10 +16,6 @@ WAFRA is a smart platform that connects businesses, individuals, and charities t
 * **Firebase** – Authentication, database, and backend services
 * **Figma** – UI/UX design and prototyping
 
-## 📸 Screenshots
-
-*Add your app screenshots here*
-
 ## 📅 Last Update
 
 April 2026
